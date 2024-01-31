@@ -1,8 +1,9 @@
 import ResturantCard, {withPromotedLabel} from "./ResturantCard"
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus"
+import UserContext from "../utils/UserContext"
 
 const Body =() => {
 
@@ -11,6 +12,9 @@ const Body =() => {
     const [searchText,setSearchText] = useState("");
 
     const PromotedResturantCard = withPromotedLabel(ResturantCard)
+
+    const {loggedInUser,setUserName} = useContext(UserContext)
+    console.log(loggedInUser)
 
     useEffect(()=>{
         fetchData();
@@ -36,7 +40,7 @@ const Body =() => {
 
       //Conditional rendering
     if(resList.length === 0){
-        return <Shimmer />
+        //return <Shimmer />
     }
 
     return (
@@ -60,6 +64,17 @@ const Body =() => {
                   setFilteredResList(filteredList)
                 }}>
                 Top Rated Resturants</button>
+                </div>
+
+                <div className="m-4 p-4 flex items-center">
+                 <label className="font-bold">User Name: </label>
+                 <input 
+                 className="bg-gray-100 border px-2"
+                 value={loggedInUser} 
+                 onChange={(e)=>{setUserName(e.target.value)}}
+                 >
+
+                 </input>
                 </div>
 
             </div>
